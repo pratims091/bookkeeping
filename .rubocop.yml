@@ -1,2 +1,10 @@
+AllCops:
+  NewCops: enable
 Documentation:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/BlockLength:
   Enabled: false

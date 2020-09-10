@@ -28,11 +28,14 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_model_serializers', '~> 0.10.10'
 gem 'acts_as_paranoid', '~> 0.7.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'dotenv-rails', groups: %i[development test]
+gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 gem 'jwt', '~> 1.5', '>= 1.5.4'
 gem 'kaminari'
+gem 'rails_param'
 gem 'ransack'
 gem 'strong_migrations'
 
@@ -40,6 +43,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
+  gem 'pry', '~> 0.12.2'
   gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
 end
 
@@ -50,7 +54,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'pry', '~> 0.12.2'
   gem 'rubocop'
   gem 'solargraph'
   gem 'spring'
