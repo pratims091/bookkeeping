@@ -7,33 +7,39 @@ module Api
 
       before_action :before_actions
 
+      # 500 error handler
       rescue_from Exception do |e|
         error_code = 1000
         render_error(error_code, 'Oops! something went wrong, please try again in sometime',
                      :internal_server_error, "INTERNAL SERVER ERROR #{e.message}")
-        raise if Rails.env.development? || Rails.env.test?
+        raise if Rails.env.development? || Rails.env.test? # Raise the error in dev and test env
       end
 
+      # Custom API error handler
       rescue_from ApiErrors::ApiV1Exception do |e|
         render_error(e.error_code, e.message, e.http_status_code.nil? ? :bad_request : e.http_status_code)
       end
 
+      # Handle Model.find(id) error
       rescue_from ActiveRecord::RecordNotFound do |e|
         error_code = 1003
         render_error(error_code, 'The requested resource is not found', :not_found, e.message)
       end
 
+      # Handle rails_param params validation errors
       rescue_from RailsParam::Param::InvalidParameterError do |e|
-        error_code = 1004
+        error_code = 1005
         render_error(error_code, e.message, :unprocessable_entity, e.message)
       end
 
       private
 
       def before_actions
+        # Skip Authorization for open APIs
         unless controller_name == 'authentications' || (controller_name == 'users' && action_name == 'create')
           validate_token
         end
+        # Prevent Idempotent request
         prevent_duplicate_request if controller_name == 'transactions' && action_name == 'create'
       end
 
@@ -43,7 +49,7 @@ module Api
         @current_user = AuthenticationService.verify_token(token)
       end
 
-      # Respond with error if the req is being made with same parameters in the span of 2 seconds
+      # Respond with error if the req is being made with same parameters in the span of 2 seconds(increase if needed)
       def prevent_duplicate_request
         cache = Rails.cache
         key = params.to_s.hash

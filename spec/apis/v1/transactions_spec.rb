@@ -135,7 +135,8 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
     scenario 'Should not succed' do
       expect(response_status).to eq 422
       expect(response_json.keys).not_to include('transaction')
-      expect(response_json.keys).to include('error')
+      expect(response_json.keys).to include('errors')
+      expect(response_json['errors'].keys).to include('transaction_type')
       user1.transactions.reload
       expect(user1.transactions.count).to eq 3
     end

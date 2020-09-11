@@ -17,6 +17,6 @@ class Transaction < ApplicationRecord
   private
 
   def contact_in_contacts?
-    errors.add(:contact, 'not in your contact list') unless (user.contacts.pluck(:id) || []).include? contact_id
+    errors.add(:contact_id, 'not in your contact list') unless (user.contacts.pluck(:id) || []).include? contact_id
   end
 end

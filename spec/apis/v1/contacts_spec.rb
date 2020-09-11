@@ -102,7 +102,7 @@ RSpec.describe Api::V1::ContactsController, type: :controller do
       expect(response_json.keys).not_to include('contact')
       user1.contacts.reload
       expect(user1.contacts.count).to eq 4
-      expect(response_json['error']['code']).to eq 1004
+      expect(response_json['error']['code']).to eq 1005
     end
   end
 

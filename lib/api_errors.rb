@@ -3,7 +3,9 @@
 module ApiErrors
   class ApiV1Exception < StandardError
     attr_reader :error_code, :message, :responsecode, :http_status_code, :description
+
     def initialize(options = {})
+      super
       @error_code = ''
       @message = options[:message] || ''
       @title = options[:title] || ''
@@ -15,6 +17,8 @@ module ApiErrors
 
   class InvalidPhoneNumber < ApiV1Exception
     def initialize
+      # Get it from DB to make it more configurable
+      super
       @error_code = 1001
       @message = 'Invalid phone number'
       @responsecode = @error_code.to_s
@@ -24,6 +28,7 @@ module ApiErrors
 
   class InvalidOtp < ApiV1Exception
     def initialize
+      super
       @error_code = 1002
       @message = 'Invalid OTP'
       @responsecode = @error_code.to_s
@@ -33,6 +38,7 @@ module ApiErrors
 
   class InvalidAuthToken < ApiV1Exception
     def initialize
+      super
       @error_code = 1004
       @message = 'Invalid authorization token'
       @responsecode = @error_code.to_s
@@ -42,6 +48,7 @@ module ApiErrors
 
   class IdempotentRequest < ApiV1Exception
     def initialize
+      super
       @error_code = 1005
       @message = 'Idempotent request'
       @responsecode = @error_code.to_s

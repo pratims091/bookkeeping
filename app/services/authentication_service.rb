@@ -13,8 +13,6 @@ class AuthenticationService
     decoded = JsonWebToken.decode(token)
     raise ApiErrors::InvalidAuthToken if decoded.nil?
 
-    user = User.find(decoded[:user_id])
-
-    user
+    User.find(decoded[:user_id])
   end
 end

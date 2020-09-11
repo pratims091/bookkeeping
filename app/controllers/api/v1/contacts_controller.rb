@@ -21,7 +21,7 @@ module Api
           contact.save!
           render json: { contact: serialize(contact) }, status: :created
         else
-          render json: { error: contact.errors.full_messages.join(',') }, status: :unprocessable_entity
+          render json: { errors: contact.errors.messages }, status: :unprocessable_entity
         end
       end
 

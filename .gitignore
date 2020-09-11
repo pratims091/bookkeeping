@@ -49,3 +49,6 @@ yarn-debug.log*
 
 # env files
 .env*
+
+# test coverage report
+/coverage

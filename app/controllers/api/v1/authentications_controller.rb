@@ -7,7 +7,7 @@ module Api
         param! :phone_number, String, required: true
         param! :otp, Integer, required: true
 
-        raise ApiErrors::InvalidOtp if params[:otp] != 1234 # Do an actual OTP erification
+        raise ApiErrors::InvalidOtp if params[:otp] != 1234 # Do an actual OTP verification
 
         user = User.find_by(phone_number: params[:phone_number])
 

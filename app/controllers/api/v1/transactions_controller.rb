@@ -17,7 +17,7 @@ module Api
           transaction.save!
           render json: { transaction: serialize(transaction) }, status: :created
         else
-          render json: { error: transaction.errors.full_messages.join(',') }, status: :unprocessable_entity
+          render json: { errors: transaction.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -30,6 +30,7 @@ module Api
         ransack = {}
         ransack[:transaction_type_eq] = params[:transaction_type] if params[:transaction_type].present?
         ransack[:contact_id_eq] = params[:contact_id] if params[:contact_id].present?
+        # Filter by contact phone number
 
         transactions = @current_user.transactions.ransack(ransack)
         transactions = transactions.result.order(happend_on: :desc)
